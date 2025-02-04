@@ -86,9 +86,9 @@ autoinstall:
     shutdown: reboot # Controls whether to reboot or poweroff the system after installation (DEFAULT)
     late-commands:  # A list of commands to run after the installation has completed successfully; Default is none
       - curtin in-target -- mkdir -p /opt/docker
-      - curtin in-target -- mkdir -p /home/gmptech/Desktop
-      - curtin in-target -- wget -O /home/gmptech/Desktop/myfile.sh https://raw.githubusercontent.com/Reynold29/CSI-Hymns-and-Lyrics/main/build-ipa.sh
-      - curtin in-target -- chmod +x /home/gmptech/Desktop/myfile.sh
+      - curtin in-target -- mkdir -p /home/gmptech/gmp
+      - curtin in-target -- wget -O mkdir -p /home/gmptech/gmp/myfile.sh https://raw.githubusercontent.com/Reynold29/CSI-Hymns-and-Lyrics/main/build-ipa.sh
+      - curtin in-target -- chmod +x mkdir -p /home/gmptech/gmp/myfile.sh
     error-commands: # A list of commands to run after the installation has failed.
         - tar -czf /installer-logs.tar.gz /var/log/installer # For example, collect installer logs in /var/log/installer
         - journalctl -b > /installer-journal.log # Collect the live system journal too
