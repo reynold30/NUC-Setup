@@ -1,0 +1,34 @@
+version: 1
+locale: en_US.UTF-8
+keyboard:
+  layout: us
+timezone: Asia/Kolkata
+
+network:
+  ethernets:
+    eth0:
+      dhcp4: true
+  version: 2
+
+storage:
+  layout:
+    name: lvm
+
+identity:
+  hostname: gmp-tech-support
+  username: gmptech
+  password: "$1$Jwk.0jle$hAZOXnxRvP.DPKOQBsWmY/" #gmp@1234
+
+packages:
+  - docker.io
+  - docker-compose
+  - mosquitto
+  - mosquitto-clients
+  - dbeaver
+
+late-commands:
+  - curtin in-target -- mkdir -p /opt/docker
+  - curtin in-target -- wget -O /home/gmptech/Desktop/myfile.sh https://raw.githubusercontent.com/Reynold29/CSI-Hymns-and-Lyrics/refs/heads/main/build-ipa.sh
+  #- curtin in-target -- chmod 644 /opt/docker/myfile.txt
+  #- curtin in-target -- systemctl enable docker
+  #- curtin in-target -- systemctl start docker
