@@ -37,35 +37,16 @@ autoinstall:
         channel: "stable/ubuntu-$REL" # Update from the stable channel (DEFAULT)
     source: # Specifies the variant of Ubuntu to be installed
         id: ubuntu-desktop
-    network: # Provide a Netplan-formatted network configuration; Default is to use DHCP on Ethernet interfaces
-        version: 2 # Defines the version of the netplan configuration, and is required for futureproofing; Currently, this must be set to "2"
-        renderer: NetworkManager # Controls the backend netplan uses (networkd or NetworkManager)
-        ethernets: # Configures wired network cards
-            wired:
-                match:
-                    name: e* # Applies this configuration to ALL wired network cards in the system *To specify a particular interface, replace "e*" with the actual interface name (you can find this with the "ip a" command)
-                dhcp4: false # This is an example of a manual IPv4 configuration (so we can assign our system a static IP)
-                dhcp6: true # We will still automatically obtain the IPv6 configuration
-                addresses: # Sets the IPv4 address of the system (MUST BE IN CIDR FORM)
-                    - 192.168.0.2/24 # For example, set the IP address to 192.168.0.2; "/24" represents the subnet mask "255.255.255.0"
-                nameservers: # Configures the DNS settings
-                    addresses: # Let's use Cloudflare's DNS servers as an example
-                        - 1.1.1.1
-                        - 1.0.0.1
-                        - 2606:4700:4700::1111
-                        - 2606:4700:4700::1001
-                routes: # Configures the default gateway
-                    - to: default
-                      via: 192.168.0.1
-        #wifis: # Configures wireless network cards
-            #wireless:
-                #match:
-                    #name: w* # Applies this configuration to ALL wireless network cards in the system *To specify a particular interface, replace "w*" with the actual interface name (you can find this with the "ip a" command)
-                #dhcp4: true # This is an example of an automatic IP configuration with DHCP
-                #dhcp6: true
-                #access-points: # Configures wireless access points
-                    #"SSID": # Be sure to replace "SSID" with your actual network's SSID (in quotes)
-                        #password: "Wi-fi Password"
+    network:
+        version: 2
+        renderer: NetworkManager
+        wifis:
+            wlan0:  # Replace "wlan0" with your actual WiFi interface name (check with `ip a`)
+                dhcp4: true
+                dhcp6: true
+                access-points:
+                    "GMP 4":  # Replace with your actual WiFi SSID
+                        password: "weypWNI1#*nes"
     apt: # Specifies the apt configuration (used both during the install and on the installed system). Below is the default apt configuration, which you can tweak according to your needs:
         preserve_sources_list: false
         mirror-selection: # A list of sources for apt to use (DEFAULT)
