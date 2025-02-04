@@ -15,8 +15,8 @@ autoinstall:
     storage: # Specifies the partition layout to use; In this example, we'll configure a drive with LVM with full-disk encryption
     # WARNING: THIS ERASES THE ENTIRE DISK!
         layout:
-            name: lvm
-            sizing-policy: all
+            name: direct
+#           sizing-policy: all
 #            password: "gmp@1234"
             match: # Specifies which disk to use, based on certain characteristics (not all of these need to be specified). This example uses the largest disk in the system, which is the default behaviour.
 #                model:
@@ -37,16 +37,16 @@ autoinstall:
         channel: "stable/ubuntu-$REL" # Update from the stable channel (DEFAULT)
     source: # Specifies the variant of Ubuntu to be installed
         id: ubuntu-desktop
-    network:
-        version: 2
-        renderer: NetworkManager
-        wifis:
-            wlan0:  # Replace "wlan0" with your actual WiFi interface name (check with `ip a`)
-                dhcp4: true
-                dhcp6: true
-                access-points:
-                    "GMP 4":  # Replace with your actual WiFi SSID
-                        password: "weypWNI1#*nes"
+#    network:
+#        version: 2
+#        renderer: NetworkManager
+#        wifis:
+#            wlan0:  # Replace "wlan0" with your actual WiFi interface name (check with `ip a`)
+#                dhcp4: true
+#                dhcp6: true
+#                access-points:
+#                    "GMP 4":  # Replace with your actual WiFi SSID
+#                        password: "weypWNI1#*nes"
     apt: # Specifies the apt configuration (used both during the install and on the installed system). Below is the default apt configuration, which you can tweak according to your needs:
         preserve_sources_list: false
         mirror-selection: # A list of sources for apt to use (DEFAULT)
@@ -73,22 +73,22 @@ autoinstall:
         install: true # Can be either true or false
     packages:
         - docker.io
-        - docker-compose
         - mosquitto
         - mosquitto-clients
-        - dbeaver
-    #snaps: # Provide a list of snaps to install on the installed system; Default is none. In this example, we'll install the hello-world snap from the stable channel with strict confinement.
-        #- name: hello-world
-          #channel: stable # Choose which channel to install the snap from (stable, candidate, beta, or edge) (DEFAULT)
+    snaps: # Provide a list of snaps to install on the installed system; Default is none. In this example, we'll install the hello-world snap from the stable channel with strict confinement.
+        - name: dbeaver-ce
+          channel: stable # Choose which channel to install the snap from (stable, candidate, beta, or edge) (DEFAULT)
           #classic: false # Choose whether or not to use classic confinement (can be either true or false) (DEFAULT)
 #    kernel: # Specify which kernel to install
 #        package:  # Install a specific kernel package
 #        flavour:  # Install a particular kernel flavour
     updates: security # Controls the type of updates that will be downloaded and installed after system installation; Can be either "security" (for security updates only) or "all" (for all updates, like in this example).
     shutdown: reboot # Controls whether to reboot or poweroff the system after installation (DEFAULT)
-    late-commands: # A list of commands to run after the installation has completed successfully; Default is none
+    late-commands:  # A list of commands to run after the installation has completed successfully; Default is none
       - curtin in-target -- mkdir -p /opt/docker
-      - curtin in-target -- wget -O /home/gmptech/Desktop/myfile.sh https://raw.githubusercontent.com/Reynold29/CSI-Hymns-and-Lyrics/refs/heads/main/build-ipa.sh
+      - curtin in-target -- mkdir -p /home/gmptech/Desktop
+      - curtin in-target -- wget -O /home/gmptech/Desktop/myfile.sh https://raw.githubusercontent.com/Reynold29/CSI-Hymns-and-Lyrics/main/build-ipa.sh
+      - curtin in-target -- chmod +x /home/gmptech/Desktop/myfile.sh
     error-commands: # A list of commands to run after the installation has failed.
         - tar -czf /installer-logs.tar.gz /var/log/installer # For example, collect installer logs in /var/log/installer
         - journalctl -b > /installer-journal.log # Collect the live system journal too
