@@ -17,7 +17,7 @@ autoinstall:
         layout:
             name: lvm
             sizing-policy: all
-            password: "gmp@1234"
+#            password: "gmp@1234"
             match: # Specifies which disk to use, based on certain characteristics (not all of these need to be specified). This example uses the largest disk in the system, which is the default behaviour.
 #                model:
 #                vendor:
